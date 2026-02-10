@@ -1,0 +1,292 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+    color: #ffffff;
+    position: relative;
+    background: radial-gradient(circle at top, #0b1220 0%, #05070d 55%, #020304 100%);
+}
+
+body.panel-open {
+    overflow: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: transparent;
+    box-shadow:
+        15vw 20vh 0 1px rgba(255, 255, 255, 0.9),
+        25vw 35vh 0 2px rgba(255, 255, 255, 0.8),
+        38vw 18vh 0 1px rgba(255, 255, 255, 0.85),
+        52vw 30vh 0 2px rgba(255, 255, 255, 0.75),
+        63vw 22vh 0 1px rgba(255, 255, 255, 0.9),
+        72vw 40vh 0 2px rgba(255, 255, 255, 0.8),
+        82vw 28vh 0 1px rgba(255, 255, 255, 0.85);
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+}
+
+.toggle-visibility {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2;
+    padding: 12px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(8, 12, 22, 0.7);
+    color: #e8f2ff;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.toggle-visibility:hover {
+    background: rgba(15, 22, 38, 0.85);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-2px);
+}
+
+.content.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.content {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.topic-panel {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: radial-gradient(circle at top, rgba(14, 24, 44, 0.95), rgba(4, 6, 12, 0.98));
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.98);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 3;
+}
+
+.topic-panel.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+}
+
+.topic-panel__content {
+    max-width: 760px;
+    width: 100%;
+    padding: 48px 42px;
+    border-radius: 18px;
+    background: rgba(8, 12, 22, 0.8);
+    border: 1px solid rgba(120, 180, 255, 0.35);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(10px);
+    text-align: left;
+    opacity: 0;
+    transform: translateY(16px);
+}
+
+.topic-panel__content.animate-in {
+    animation: panelTextIn 0.6s ease forwards;
+}
+
+.topic-panel__content.animate-in.zoom-in {
+    animation: panelTextIn 0.6s ease forwards, panelZoomIn 0.8s ease forwards;
+}
+
+.topic-panel__content.animate-out {
+    animation: panelTextOut 0.6s ease forwards;
+}
+
+@keyframes panelTextIn {
+    0% {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes panelTextOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+}
+
+@keyframes panelZoomIn {
+    0% {
+        transform: scale(0.92);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.topic-panel__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(10, 16, 30, 0.7);
+    color: #e7f1ff;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    margin-bottom: 28px;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.topic-panel__close:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(18, 28, 48, 0.85);
+}
+
+.topic-panel__eyebrow {
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(150, 200, 255, 0.8);
+    margin-bottom: 12px;
+}
+
+#topic-title {
+    font-size: 2.6rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: #f1f6ff;
+}
+
+#topic-body {
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: rgba(230, 242, 255, 0.9);
+}
+
+/* WebGL Canvas - Full Background */
+#webgl-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* Content Overlay */
+.content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 80px;
+    padding: 40px 0;
+}
+
+h1 {
+    font-size: 4rem;
+    font-weight: 300;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    letter-spacing: 4px;
+}
+
+.story-section {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    margin-bottom: 40px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.story-section:hover {
+    background: rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-5px);
+}
+
+.story-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #66d9ef;
+}
+
+.story-section p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .toggle-visibility {
+        top: 12px;
+        right: 12px;
+        padding: 10px 14px;
+        font-size: 0.8rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        letter-spacing: 4px;
+    }
+    
+    .story-section {
+        padding: 25px;
+    }
+    
+    .story-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .topic-panel__content {
+        padding: 34px 26px;
+    }
+
+    #topic-title {
+        font-size: 2rem;
+    }
+}
