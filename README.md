@@ -2,6 +2,8 @@
 
 Interactive frontend demo exploring the "Egg Theory" concept using plain HTML, CSS, and JavaScript.
 
+Live demo: https://the-incubation.vercel.app
+
 A small, browser-based project that visualizes and experiments with the Egg Theory idea. It's designed for learning, experimentation, and lightweight demos — no build step required.
 
 Features
